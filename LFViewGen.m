@@ -28,7 +28,6 @@ function [OutImg, Over] = LFViewGen(LF, LFD, Pos, Alloc, dir, LFflag)
     PelAngles = Alloc(1, 1) + deg2rad(360/Params.Width) .* (PelWidth - 1);
     
     LF_x = ((Params.S / 2) - Pos(1, 2)) .* tan(PelAngles) + Pos(1, 1);
-%     dist = 0.02 * ((Params.S / 2) - Pos(1, 2));
     dist = 0.02 * sqrt((LF_x - Pos(1, 1)) .^ 2 + ((Params.S / 2) - Pos(1, 2)) .^ 2);
     dist = repmat(dist', Params.Height, 1);
 
@@ -72,7 +71,7 @@ function [OutImg, Over] = LFViewGen(LF, LFD, Pos, Alloc, dir, LFflag)
     
     LF_pi = (LF_v-(Params.Height/2))/((Params.Height/2)) * pi/2;
     
-    % This function is not exactly the same as that of the paper due to backward.
+    % This part is modified for backward projection
     LF_pi_corr = atan2((LF_d .* sin(LF_pi)), (LF_d .* cos(LF_pi) - dist));
     LF_v_corr  = (LF_pi_corr / (pi/2)) * (Params.Height/2) + (Params.Height/2);
         
